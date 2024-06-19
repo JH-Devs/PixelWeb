@@ -1,0 +1,14 @@
+{
+    "name": "jhdevs/pixelweb",
+    "description": "A simple PHP framework for building application",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jitka Hořavová",
+            "email": "jitka.horavova@jh-devs.cz"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {}
+}
