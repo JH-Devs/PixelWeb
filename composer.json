@@ -1,14 +1,41 @@
 {
     "name": "jhdevs/pixelweb",
     "description": "A simple PHP framework for building application",
+    "keywords": ["framework", "php", "pixelweb"],
     "type": "library",
     "license": "MIT",
+    "readme": "",
+    "time": "",
+    "support" : {
+        "issues": "https://github.com/JH-Devs/PixelWeb/issues",
+        "source": "https://github.com/JH-Devs/PixelWeb"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Jhdevs\\": "src/Pixelweb"
+        }
+    },
     "authors": [
         {
             "name": "Jitka Hořavová",
-            "email": "jitka.horavova@jh-devs.cz"
+            "email": "jitka.horavova@jh-devs.cz",
+            "role": "Developer"
         }
     ],
+    "autoload-dev": {
+        "psr-4": {
+            "PixelWeb\\Tests\\" : "tests/"
+        }
+    },
     "minimum-stability": "alpha",
-    "require": {}
+    "require": {
+        "php": "7.4.12|^8.0",
+        "ext-mbstring": "*",
+        "ext-iconv": "*",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-simplexml": "*"
+    }
 }
