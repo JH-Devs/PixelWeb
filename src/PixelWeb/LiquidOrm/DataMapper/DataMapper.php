@@ -154,10 +154,10 @@ class DataMapper implements DataMapperInterface
      * 
      * @return void
      */
-    public function execute()
+    public function execute() 
     {
         if ($this->stmt)
-        $this->stmt->execute();
+        return $this->stmt->execute();
     }   
 
     /**
@@ -206,6 +206,18 @@ class DataMapper implements DataMapperInterface
                 }
             }
         }catch(Throwable $throwable) {
+            throw $throwable;
+        }
+    }
+    public function buildQueryParameters(array $conditions = [], array $parameters = []) : array
+    {
+        return (!empty($parameters || (!empty($conditions))) ? array_merge($conditions, $parameters) : $parameters);
+    }
+    public function persist(string $sqlQuery, array $parameters)
+    {
+        try {
+            return $this->prepare($sqlQuery)->bindParameters($parameters)->execute();
+        } catch(Throwable $throwable) {
             throw $throwable;
         }
     }

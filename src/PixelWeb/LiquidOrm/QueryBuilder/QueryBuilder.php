@@ -5,7 +5,7 @@ namespace PixelWeb\LiquidOrm\QueryBuilder;
 
 use PixelWeb\LiquidOrm\QueryBuilder\Exception\QueryBuilderInvalidArgumentException;
 
-class QueryBuider implements QueryBuilderInterface
+class QueryBuilder implements QueryBuilderInterface
 {
     protected array $key;
     protected string $sqlQuery = '';
@@ -25,7 +25,7 @@ class QueryBuider implements QueryBuilderInterface
         'type' => '',
         'raw' => ''
     ];
-    protected const QUERY_TYPES = ['insert', 'select', 'update', 'delete', 'raw'];
+    protected const QUERY_TYPES = ['insert', 'select', 'update', 'delete', 'raw', 'search'];
     /**
      * Moje konstrukční třída
      * 
@@ -35,6 +35,12 @@ class QueryBuider implements QueryBuilderInterface
     {
 
     }
+    /**
+     * @inheritDoc
+     *
+     * @param array $args
+     * @return self
+     */
 	public function buildQuery(array $args = []) : self
     {
         if (count($args) < 0) {
@@ -44,6 +50,12 @@ class QueryBuider implements QueryBuilderInterface
         $this->key = $arg;
         return $this;
     }
+    /**
+     * @inheritDoc
+     *
+     * @param string $type
+     * @return boolean
+     */
     private function isQueryTypeValid(string $type) : bool
     {
         if (in_array($type, self::QUERY_TYPES)) {
@@ -51,6 +63,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
     public function insertQuery() : string
     {
         if ($this->isQueryTypeValid('insert')) {
@@ -63,6 +80,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
     public function selectQuery() : string
     {
         if ($this->isQueryTypeValid('select')) {
@@ -74,6 +96,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
     public function updateQuery() : string
     {
         if ($this->isQueryTypeValid('update')) {
@@ -98,6 +125,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
     public function deleteQuery() : string
     {
         if ($this->isQueryTypeValid('delete')) {
@@ -113,6 +145,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
     public function rawQuery() : string
     {
         if ($this->isQueryTypeValid('raw')) {
@@ -122,6 +159,11 @@ class QueryBuider implements QueryBuilderInterface
         }
         return false;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return boolean
+     */
     private function hasConditions()
     {
         if (isset($this->key['conditions']) && $this->key['conditions'] !='') {
@@ -146,6 +188,22 @@ class QueryBuider implements QueryBuilderInterface
             $this->sqlQuery .= " LIMIT :offset, :limit";
         }
         return $this->sqlQuery;
+    }
+    /**
+     * @inheritDoc
+     *
+     * @return string
+     */
+    public function searchQuery() : string
+    {
+        if ($this->isQueryTypeValid('search')) {
+            $selectors = (!empty($this->key['selectors'])) ? implode(", ", $this->key['selectors']) : '*';
+            $this->sqlQuery = "SELECT $selectors FROM {$this->key['table']}";
+
+            $this->sqlQuery = $this->hasConditions(true);
+            return $this->sqlQuery;
+        }
+        return '';
     }
 
 }

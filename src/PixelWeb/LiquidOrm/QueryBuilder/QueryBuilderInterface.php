@@ -9,5 +9,6 @@ interface QueryBuilderInterface
     public function selectQuery() : string;
     public function updateQuery() : string;
     public function deleteQuery() : string;
+    public function searchQuery() : string;
     public function rawQuery() : string;
 }
