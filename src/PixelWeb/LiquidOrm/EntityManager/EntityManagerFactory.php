@@ -27,6 +27,15 @@ class EntityManagerFactory
         $this->dataMapper = $dataMapper;
         $this->queryBuilder = $queryBuilder;
     }
+    /**
+     *  @inheritdoc
+     *
+     * @param string $crudString
+     * @param string $tableSchema
+     * @param string $tableSchemaId
+     * @param array $options
+     * @return EntityManagerInterface
+     */
     public function create(string $crudString, string $tableSchema, string $tableSchemaId, array $options = []) : EntityManagerInterface
     {
         $crudObject = new $crudString($this->dataMapper, $this->queryBuilder, $tableSchema, $tableSchemaId, $options);

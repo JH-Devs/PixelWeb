@@ -14,6 +14,7 @@ class Crud implements CrudInterface
     protected QueryBuilder $queryBuilder;
     protected string $tableSchema;
     protected string $tableSchemaId;
+    protected array $options;
 
   /**
    * Moje konstrukční třída
@@ -23,12 +24,13 @@ class Crud implements CrudInterface
    * @param string $tableSchema
    * @param string $tableSchemaId
    */
-    public function __construct(DataMapper $dataMapper, QueryBuilder $queryBuilder, string $tableSchema, string $tableSchemaId)
+    public function __construct(DataMapper $dataMapper, QueryBuilder $queryBuilder, string $tableSchema, string $tableSchemaId, ?array $options = [])
     {
         $this->dataMapper = $dataMapper;
         $this->queryBuilder = $queryBuilder;
         $this->tableSchema = $tableSchema;
         $this->tableSchemaId = $tableSchemaId;
+        $this->options = $options;
     }
     /**
      * @inheritdoc
