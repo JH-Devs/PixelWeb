@@ -30,12 +30,13 @@
     },
     "minimum-stability": "alpha",
     "require": {
-        "php": "7.4.12|^8.0",
+        "php": "7.4.33|^8.0",
         "ext-mbstring": "*",
         "ext-iconv": "*",
         "ext-pdo": "*",
         "ext-json": "*",
         "ext-curl": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "twig/twig": "^3.10"
     }
 }
