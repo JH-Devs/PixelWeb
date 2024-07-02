@@ -13,7 +13,7 @@ class SessionManager
      *
      * @return void
      */
-    public static function initialize() : Object
+    public static function initialize() : object
     {
         $factory = new SessionFactory();
         return $factory->create('', \PixelWeb\Session\Storage\NativeSessionStorage::class, array());
