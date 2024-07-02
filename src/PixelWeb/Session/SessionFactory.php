@@ -16,7 +16,7 @@ class SessionFactory
     }
     public function create(string $sessionName, string $storageString, array $options = []) : SessionInterface
     {
-        $storageObject = new storageString($options);
+        $storageObject = new $storageString($options);
         if (!$storageObject instanceof SessionStorageInterface) {
             throw new SessionStorageInvalidArgumentException($storageString . ' není platný objekt úložiště relace.');
         }
