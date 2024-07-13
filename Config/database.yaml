@@ -1,0 +1,9 @@
+driver:
+  mysql:
+    dns: mysql:host=localhost;port=8889;dbname=test;charset=utf8mb4
+    username: root
+    password: ''
+  pgsql:
+    dns: pgsql:host=localhost;dbname=test;charset=utf8mb4
+    username: root
+    password: ''

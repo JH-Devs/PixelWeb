@@ -10,11 +10,24 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlConfig 
 {
+    /**
+     * Zkontroluje, zda zadaný konfigurační soubor yaml existuje v zadaném adresáři, jinak vyvolá výjimku
+     * 
+     * @param string $filename
+     * @throws \PixelWeb\Base\Exception\BaseException
+     * @return void
+     */
     private function isFileExists(string $filename)
     {
         if (!file_exists($filename))
             throw new BaseException($filename . ' neexistuje');
     }
+    /**
+     * Načte konfiguraci yaml
+     * 
+     * @param string $yamlFile
+     * @return mixed
+     */
     public function getYaml(string $yamlFile)
     {
         foreach (glob(CONFIG_PATH . DS . '*.yaml') as $file) {
@@ -26,6 +39,12 @@ class YamlConfig
             }
         }
     }
+    /**
+     * Načte konfiguraci yaml do analyzátoru yaml
+     * 
+     * @param string $yamlFile
+     * @return mixed
+     */
     public static function file(string $yamlFile)
     {
         return (new YamlConfig) -> getYaml($yamlFile);
