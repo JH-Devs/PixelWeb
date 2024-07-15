@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PixelWeb\Base;
 
+use PixelWeb\Twig\TwigExtension;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;

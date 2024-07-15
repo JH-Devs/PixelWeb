@@ -110,7 +110,7 @@ class Session implements SessionInterface
      * @param [type] $value
      * @return void
      */
-    public function flush(string $key, $value)
+    public function flush(string $key, $value = null)
     {
         $this->ensureSessionKeyIsValid($key);
         try {
