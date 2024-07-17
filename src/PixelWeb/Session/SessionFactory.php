@@ -14,13 +14,16 @@ class SessionFactory
     {
 
     }
+
     public function create(string $sessionName, string $storageString, array $options = []) : SessionInterface
     {
         $storageObject = new $storageString($options);
         if (!$storageObject instanceof SessionStorageInterface) {
             throw new SessionStorageInvalidArgumentException($storageString . ' není platný objekt úložiště relace.');
         }
-        return new Session($sessionName, $storageObject);
+        // Debugovací výpis
+        echo 'Typ objektu úložiště: ' . get_class($storageObject) . '<br>';
+
+        return new Session($storageObject, $sessionName); // Změněné pořadí parametrů
     }
-	
 }

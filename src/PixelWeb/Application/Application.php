@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PixelWeb\Application;
 
 use PixelWeb\Application\Config;
+use PixelWeb\Traits\SystemTrait;
 
 class Application
 {
@@ -28,11 +29,11 @@ class Application
 
     private function constants() : void
     {
-        define('DS', '/');
-        define('APP_ROOT', $this->appRoot);
-        define('CONFIG_PATH', APP_ROOT . DS . 'Config');
-        define('TEMPLATE_PATH', APP_ROOT . DS . 'App/templates');
-        define('LOG_DIR', APP_ROOT . DS . 'tmp/log');
+        defined('DS') or define('DS', '/');
+        defined('APP_ROOT') or define('APP_ROOT', $this->appRoot);
+        defined('CONFIG_PATH') or define('CONFIG_PATH', APP_ROOT . DS . 'Config');
+        defined('TEMPLATE_PATH') or define('TEMPLATE_PATH', APP_ROOT . DS . 'App/templates');
+        defined('LOG_DIR') or define('LOG_DIR', APP_ROOT . DS . 'tmp/log');
     }
 
     private function environment()
@@ -45,5 +46,10 @@ class Application
         error_reporting(E_ALL | E_STRICT);
         set_error_handler('PixelWeb\ErrorHandling\ErrorHandling::errorHandler');
         set_exception_handler('PixelWeb\ErrorHandling\ErrorHandling::exceptionHandler');
+    }
+    public function setSession()
+    {
+        SystemTrait::sessionInit(true);
+        return $this;
     }
 }

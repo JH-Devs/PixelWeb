@@ -20,12 +20,12 @@ class Session implements SessionInterface
     /**
      * Moje konstrukční třída
      *
-     * @param SessionStorageInterface|null $storage
+     * @param SessionStorageInterface $storage
      * @param string $sessionName
      */
-    public function __construct(SessionStorageInterface $storage = null, string $sessionName)
+    public function __construct(SessionStorageInterface $storage, string $sessionName)
     {
-        if($this->isSessionKeyValid($sessionName) === false) {
+        if ($this->isSessionKeyValid($sessionName) === false) {
             throw new SessionInvalidArgumentException($sessionName . ' neplatný název relace.');
         }
         $this->storage = $storage;

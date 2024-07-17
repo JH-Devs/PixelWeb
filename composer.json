@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jhdevs\\": "src/Pixelweb"
+            "PixelWeb\\": "src/Pixelweb/"
         }
     },
     "authors": [
@@ -30,7 +30,7 @@
     },
     "minimum-stability": "alpha",
     "require": {
-        "php": "7.4.33|^8.0",
+        "php": "7.4|^8.0",
         "ext-mbstring": "*",
         "ext-iconv": "*",
         "ext-pdo": "*",
