@@ -1,10 +1,19 @@
-session_name: 'pixelweb_session'
-lifetime: '0'
-path: '/'
-domain: ''
-secure: false
-httponly: true
+session_name: 'pixelweb_session' # Jedinečný název relace
+lifetime: '0'  # Životnost cookie v sekundách.
+path: '/'      # Cesta, kde jsou informace uloženy.
+domain: ''     # Doména, do které cookie patří.
+secure: false  # Soubor cookie by měl být odesílán pouze       prostřednictvím zabezpečeného připojení
+httponly: true # K cookie lze přistupovat pouze prostřednictvím protokolu HTTP.
+samesite: lax  # Řídí odesílání cookie mezi doménami.
+ # - podporuje 'lax', 'strict', 'none', null
+
+# udává počet sekund, po kterých budou data považována za
+#'odpadky' a potenciálně vyčištěné.
 gc_maxlifetime: '1800'
+# ve spojení s session.gc_divisor se používá ke správě pravděpodobnosti
+# že je spuštěna rutina gc (sběr odpadu).
 gc_probability: '1000'
+# Spojení s session.gc_probability definuje pravděpodobnost, že proces GC (garbage collection, sběr odpadu) bude spuštěn při každé inicializaci relace. Pravděpodobnost je vypočítána jako gc_probability/gc_divisor, např. 1/100 znamená, že je 1% šance, že proces GC začne při každém požadavku. session.gc_divisor má výchozí hodnotu 100.
 gc_divisor: '1'
+# specifikuje, zda bude modul používat soubory cookie k uložení ID relace na straně klienta. Výchozí hodnota je 1 (povoleno).
 use_cookies: '1'

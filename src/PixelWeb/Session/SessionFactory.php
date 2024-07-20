@@ -22,7 +22,7 @@ class SessionFactory
             throw new SessionStorageInvalidArgumentException($storageString . ' není platný objekt úložiště relace.');
         }
         // Debugovací výpis
-        echo 'Typ objektu úložiště: ' . get_class($storageObject) . '<br>';
+       /* echo 'Typ objektu úložiště: ' . get_class($storageObject) . '<br>';*/
 
         return new Session($storageObject, $sessionName); // Změněné pořadí parametrů
     }

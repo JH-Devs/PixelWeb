@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PixelWeb\Base;
 
 use PixelWeb\Base\BaseView;
+use PixelWeb\Base\Exception\BaseBadMethodCallException;
 use PixelWeb\Base\Exception\BaseLogicException;
 
 class BaseController
@@ -25,4 +26,20 @@ class BaseController
         }
         return $this->twig->twigRender($template, $context);
     }
+    public function __call($name, $args)
+    {
+        $method = $name . 'Action';
+        if (method_exists($this, $method)) {
+            if ($this->before() !== false) {
+                call_user_func_array([$this, $method], $args);
+                $this->after();
+            }
+        } else {
+            throw new BaseBadMethodCallException('Metoda ' . $method . ' neexistuje v ' . get_class($this));
+        }
+    }
+    protected function before()
+    { }
+    protected function after()
+    { }
 }

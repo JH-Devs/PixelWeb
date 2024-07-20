@@ -8,6 +8,7 @@ use PixelWeb\Router\Exception\RouterBadMethodCallException;
 use PixelWeb\Router\Exception\RouterException;
 use PixelWeb\Router\RouterInterface;
 
+
 class Router implements RouterInterface
 {
      /**
@@ -34,39 +35,49 @@ class Router implements RouterInterface
 
      public function add(string $route, array $params = []) :void
      {
+        // Převod cesty na regulární výraz: úniková lomítka
+        $route = preg_replace('/\//', '\\/', $route);
+         // Přidá počáteční a koncové oddělovače a příznak nerozlišující malá a velká písmena
+         $route = '/^' . $route . '$/i';
+
         $this->routes[$route] = $params;
      }
        /**
      * @inheritDoc
      */
 
-     public function dispatch(string $url) : void
+     public function dispatch(string $url): void
      {
-        if ($this->match($url)) {
-            $controllerString = $this->params['controller'];
-            $controllerString = $this->transformUpperCamelCase($controllerString);
-            $controllerString = $this->getNamespace($controllerString);
-
-            if (class_exists($controllerString)) {
-                $controllerObject = new $controllerString($this->params);
-                $action = $this->params['action'];
-                $action = $this->transformUpperCamelCase($action);
-
-                if (\is_callable([$controllerObject, $action])) {
-                    $controllerObject->$action();
-                } else {
-                    throw new RouterBadMethodCallException();
-                }
-            } else {
-                throw new RouterException();
-            }
-        } else {
-            throw new RouterException();
-        }
+         if ($this->match($url)) {
+             $controllerString = $this->transformUpperCamelCase($this->params['controller']) . $this->controllerSuffix;
+             $controllerString = $this->getNamespace($controllerString);
+     
+           /*  echo "Attempting to load controller: " . $controllerString . "<br>"; */
+     
+             if (class_exists($controllerString)) {
+             /*   echo "Controller class found: " . */$controllerString . "<br>";
+                 $controllerObject = new $controllerString($this->params);
+                 $action = $this->transformCamelCase($this->params['action']);
+     
+                 if (\is_callable([$controllerObject, $action])) {
+                  /*   echo "Method found: " . $action . "<br>";*/
+                     $controllerObject->$action();
+                 } else {
+                     throw new RouterBadMethodCallException('Method ' . $action . ' not found in controller ' . $controllerString);
+                 }
+             } else {
+                 throw new RouterException('Controller class not found: ' . $controllerString);
+             }
+         } else {
+             throw new RouterException('No route matched.');
+         }
      }
-     public function transformUpperCamelCase(string $string) : string 
+     
+     
+ 
+     public function transformUpperCamelCase(string $string): string 
      {
-        return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
+         return str_replace(' ', '', ucwords(str_replace('-', ' ', strtolower($string))));
      }
      public function transformCamelCase(string $string) : string
      {
@@ -90,13 +101,18 @@ class Router implements RouterInterface
                         $params[$key] = $param;
                     }
                 }
-                $this->params = $params ;
+                $this->params = $params;
+
+                 // Debugging output
+             /*   echo "Route matched: " . $route . "<br>";
+                 echo "Controller: " . $this->params['controller'] . "<br>";
+                 echo "Action: " . $this->params['action'] . "<br>"; */
                 return true;
             }
         }
         return false;
     }
-        /**
+    /**
      * Získá jmenný prostor pro třídu kontroleru, jmenný prostor definovaný v parametrech cesty
      * pouze pokud byl přidán.
      * 
@@ -109,6 +125,7 @@ class Router implements RouterInterface
         if (array_key_exists('namespace', $this->params)) {
             $namespace .=$this->params['namespace'] . '\\';
         }
-        return $namespace;
+        return $namespace . $string;
     }
+    
 }

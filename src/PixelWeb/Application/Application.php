@@ -6,6 +6,7 @@ namespace PixelWeb\Application;
 
 use PixelWeb\Application\Config;
 use PixelWeb\Traits\SystemTrait;
+use PixelWeb\Router\RouterManager;
 
 class Application
 {
@@ -50,6 +51,11 @@ class Application
     public function setSession()
     {
         SystemTrait::sessionInit(true);
+        return $this;
+    }
+    public function setRouteHandler(string $url) : self
+    {
+        RouterManager::dispatchRoute($url);
         return $this;
     }
 }
