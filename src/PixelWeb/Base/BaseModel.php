@@ -29,7 +29,7 @@ class BaseModel
         if (empty($tableSchema) || empty($tableSchemaId)) {
             throw new BaseInvalidArgumentException('Tyto argumenty jsou povinné.');
         }
-        $factory = new DataRepositoryFactory('', $tableSchema, $tableSchemaId);
+        $factory = new DataRepositoryFactory('basicCrud', $tableSchema, $tableSchemaId);
         $this->repository = $factory->create(DataRepository::class);
     }
     /**
