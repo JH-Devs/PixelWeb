@@ -9,4 +9,8 @@ use InvalidArgumentException;
 class BaseInvalidArgumentException extends InvalidArgumentException
 {
 
+    public function __construct(string $message, int $code = 0, InvalidArgumentException $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PixelWeb\LiquidOrm\DataMapper;
 
+use PixelWeb\Base\Exception\BaseInvalidArgumentException;
 use PixelWeb\DataMapper\Exception\DataMapperInvalidArgumentException;
 
 class DataMapperEnvironmentConfiguration
@@ -47,7 +48,7 @@ class DataMapperEnvironmentConfiguration
      * @param string $driver
      * @return void
      */
-    private function isCredentialsValid(string $driver) : void
+   /* private function isCredentialsValid(string $driver) : void
     {
         if (empty($driver) && !is_string($driver)) {
             throw new DataMapperInvalidArgumentException('Neplatný argument. Buď chybí nebo je neplatný datový typ');
@@ -57,6 +58,12 @@ class DataMapperEnvironmentConfiguration
         }
         if (!in_array($driver, array_keys($this->credentials[$driver]))) {
             throw new DataMapperInvalidArgumentException('Neplatné nebo nepodporovatelný databázový ovladač.');
+        }
+    } */
+    private function isCredentialsValid(string $driver) : void
+    {
+        if (empty($driver) || !is_array($this->credentials)) {
+            throw new BaseInvalidArgumentException('Core Error: Buď jste nezadali výchozí ovladač databáze, nebo database.yaml vrací hodnotu null nebo prázdný.');
         }
     }
 }

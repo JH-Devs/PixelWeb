@@ -6,7 +6,8 @@ namespace PixelWeb\Application;
 
 use PixelWeb\Application\Config;
 use PixelWeb\Traits\SystemTrait;
-use PixelWeb\Router\RouterManager;
+use PixelWeb\Router\RouterFactory;
+use PixelWeb\Yaml\YamlConfig;
 
 class Application
 {
@@ -53,9 +54,13 @@ class Application
         SystemTrait::sessionInit(true);
         return $this;
     }
-    public function setRouteHandler(string $url) : self
+    public function setRouteHandler(string $url = null, array $routes = []) : self
     {
-        RouterManager::dispatchRoute($url);
+        $url = ($url) ? $url : $_SERVER['QUERY_STRING'];
+        $routes = ($routes) ? $routes : YamlConfig::file('routes');
+        
+        $factory = new RouterFactory($url, $routes);
+        $factory->create(\PixelWeb\Router\Router::class)->buildRoutes();
         return $this;
     }
 }

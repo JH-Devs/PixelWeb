@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PixelWeb\LiquidOrm\DataRepository;
 
+use PixelWeb\Base\Exception\BaseUnexpectedValueException;
 use PixelWeb\LiquidOrm\DataRespository\Exception\DataRepositoryException;
 
 class DataRepositoryFactory 
@@ -34,7 +35,7 @@ class DataRepositoryFactory
     {
         $dataRepositoryObject = new $dataRepositoryString();
         if (!$dataRepositoryObject instanceof DataRepositoryInterface) {
-            throw new DataRepositoryException($dataRepositoryString . ' není platný objekt úložiště.');
+            throw new BaseUnexpectedValueException($dataRepositoryString . ' není platný objekt úložiště.');
         }
         return $dataRepositoryObject;
     }

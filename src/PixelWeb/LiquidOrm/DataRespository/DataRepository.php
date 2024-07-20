@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PixelWeb\LiquidOrm\DataRepository;
 
+use PixelWeb\Base\Exception\BaseInvalidArgumentException;
 use PixelWeb\LiquidOrm\DataRespository\Exception\DataRepositoryInvalidArgumentException;
 use PixelWeb\LiquidOrm\EntityManager\EntityManagerInterface;
 use Throwable;
@@ -31,7 +32,7 @@ class DataRepository implements DataRepositoryInterface
     private function isArray(array $conditions) : void
     {
         if (!is_array($conditions))
-        throw new DataRepositoryInvalidArgumentException('Zadaný argument není pole');
+        throw new BaseInvalidArgumentException('Zadaný argument není pole');
     }
     /**
      * @inheritdoc
@@ -42,7 +43,7 @@ class DataRepository implements DataRepositoryInterface
     private function isEmpty(int $id) : void
     {
         if (empty($id))
-            throw new DataRepositoryInvalidArgumentException('Argument by neměl být prázdný');
+            throw new BaseInvalidArgumentException('Argument by neměl být prázdný');
     }
     /**
      * @inheritdoc

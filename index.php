@@ -15,7 +15,8 @@ if (is_file($autoload)) {
 }
 
 use PixelWeb\Application\Application;
-use PixelWeb\Router\Router;
+use PixelWeb\Router\RouterFactory;
+use Symfony\Component\Yaml\Yaml;
 
 /*
 echo "Autoloading works!<br>"; // Přidejte tento řádek pro testování*/
@@ -28,16 +29,19 @@ try {
     $app = new Application(ROOT_PATH);
     $app->run()->setSession();
 
+    // Načtěte trasy ze souboru YAML
+    $routesFile = ROOT_PATH . '/Config/routes.yaml';
+    if (!file_exists($routesFile)) {
+        throw new Exception('Soubor "routes.yaml" nebyl nalezen na cestě: ' . $routesFile);
+    }
+    $routes = Yaml::parseFile($routesFile);
+
     // Získání URL cesty
     $url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
-    // Vytvoření instance Routeru a načtení tras
-    $router = new Router();
-    $router->add('', ['controller' => 'Home', 'action' => 'index']);
-    $router->add('login', ['controller' => 'Security', 'action' => 'login']);
- 
-    // Zavolej dispatch metodu pro zpracování požadavku
-    $router->dispatch($url); 
+    // Vytvořte a nastavte router pomocí RouterFactory
+    $routerFactory = new RouterFactory($url, $routes);
+    $routerFactory->create(PixelWeb\Router\Router::class)->buildRoutes();
 
 } catch (Throwable $e) {
     echo "Zachycená vyjímka: " . $e->getMessage() . "<br>";

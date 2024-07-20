@@ -6,6 +6,9 @@ namespace PixelWeb\LiquidOrm\DataMapper;
 
 use PDO;
 use PDOStatement;
+use PixelWeb\Base\Exception\BaseException;
+use PixelWeb\Base\Exception\BaseInvalidArgumentException;
+use PixelWeb\Base\Exception\BaseNoValueException;
 use PixelWeb\DatabaseConnection\DatabaseConnectionInterface;
 use PixelWeb\DataMapper\Exception\DataMapperException;
 use Throwable;
@@ -33,12 +36,12 @@ class DataMapper implements DataMapperInterface
      * @param mixed $value
      * @param string | null $errorMessage
      * @return void
-     * @throws DataMapperException
+     * @throws BaseNoValueException
      */
-    private function isEmpty($value, string $errorMessage = null) :void
+    private function isEmpty($value, string $errorMessage = null)
     {
         if (empty($value)) {
-            throw new DataMapperException($errorMessage);
+            throw new BaseNoValueException($errorMessage);
         }
     }
     /**
@@ -48,10 +51,10 @@ class DataMapper implements DataMapperInterface
      * @return void
      * @throws 
      */
-    private function isArray(array $value) :void
+    private function isArray(array $value)
     {
         if (is_array($value)) {
-            throw new DataMapperException('Váš argument musí být pole');
+            throw new BaseInvalidArgumentException('Váš argument musí být pole');
         }
     }
       /**
@@ -85,7 +88,7 @@ class DataMapper implements DataMapperInterface
                         break;
             }
             return $dataType;
-        } catch (DataMapperException $exception) {
+        } catch (BaseException $exception) {
             throw $exception;
         }
     }
