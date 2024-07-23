@@ -17,14 +17,14 @@ interface CrudInterface
      * 
      * @return string
      */
-    public function getSchemaID() : string;
+    public function getSchemaId() : string;
 
      /**
      * Vrátí poslední vložené ID
      * 
      * @return int
      */
-    public function lastID() : int;
+    public function lastId() : int;
 
     /**
      * Vytvoří metodu, která vloží data do tabulky
@@ -81,5 +81,7 @@ interface CrudInterface
      * @return mixed
      */
     public function rawQuery(string $rawQuery, array $conditions = []);
+
+    public function get(array $selectors = [], array $conditions = []) : ?object;
    
 }

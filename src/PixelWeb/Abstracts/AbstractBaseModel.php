@@ -8,4 +8,5 @@ use PixelWeb\Base\BaseModel;
 abstract class AbstractBaseModel extends BaseModel
 {
     abstract public function guardedId() : array; 
+    
 }

@@ -6,7 +6,6 @@ namespace PixelWeb\LiquidOrm\DataMapper;
 
 use PixelWeb\Base\Exception\BaseUnexpectedValueException;
 use PixelWeb\DatabaseConnection\DatabaseConnectionInterface;
-use PixelWeb\DataMapper\Exception\DataMapperException;
 use PixelWeb\Yaml\YamlConfig;
 
 class DataMapperFactory
@@ -43,11 +42,11 @@ class DataMapperFactory
      * $dataMapperEnvironmentConfiguration get instantiated in the DataRepositoryFactory
      *
      * @param string $databaseConnectionString
-     * @param Object $dataMapperEnvironmentConfiguration
+     * @param object $dataMapperEnvironmentConfiguration
      * @return DataMapperInterface
      * @throws BaseUnexpectedValueException
      */
-    public function create(string $databaseConnectionString, Object $dataMapperEnvironmentConfiguration) : DataMapperInterface
+    public function create(string $databaseConnectionString, object $dataMapperEnvironmentConfiguration) : DataMapperInterface
     {
         // Create databaseConnection Object and pass the database credentials in
         $credentials = $dataMapperEnvironmentConfiguration->getDatabaseCredentials(YamlConfig::file('app')['pdo_driver']);

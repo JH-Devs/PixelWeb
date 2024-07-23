@@ -1,6 +1,6 @@
 driver:
   mysql:
-    dns: mysql:host=localhost;port=8889;dbname=test;charset=utf8mb4
+    dns: mysql:host=localhost;port=8889;dbname=pixelweb;charset=utf8mb4
     username: root
     password: ''
   pgsql:

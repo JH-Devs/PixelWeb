@@ -6,4 +6,5 @@ namespace PixelWeb\LiquidOrm\EntityManager;
 interface EntityManagerInterface
 {
     public function getCrud() : object;
+    
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PixelWeb\LiquidOrm\DataRepository;
 
 use PixelWeb\Base\Exception\BaseInvalidArgumentException;
-use PixelWeb\LiquidOrm\DataRespository\Exception\DataRepositoryInvalidArgumentException;
 use PixelWeb\LiquidOrm\EntityManager\EntityManagerInterface;
 use Throwable;
 
@@ -13,44 +12,23 @@ class DataRepository implements DataRepositoryInterface
 {
     protected EntityManagerInterface $em;
 
-    /**
-     * @inheritdoc
-     *
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
-	
-    /**
-     * @inheritdoc
-     *
-     * @param array $conditions
-     * @return void
-     */
+
     private function isArray(array $conditions) : void
     {
         if (!is_array($conditions))
         throw new BaseInvalidArgumentException('Zadaný argument není pole');
     }
-    /**
-     * @inheritdoc
-     *
-     * @param integer $id
-     * @return void
-     */
+
     private function isEmpty(int $id) : void
     {
         if (empty($id))
             throw new BaseInvalidArgumentException('Argument by neměl být prázdný');
     }
-    /**
-     * @inheritdoc
-     *
-     * @param integer $id
-     * @return array
-     */
+
     public function find(int $id) : array
     {
         $this->isEmpty($id);
@@ -60,29 +38,17 @@ class DataRepository implements DataRepositoryInterface
             throw $throwable;
         }
     }
-    /**
-     * @inheritdoc
-     *
-     * @return array
-     */
+
     public function findAll() : array
     {
         try{
-            return $this->em->getCrud()->read();
+            return $this->findBy();
         }catch(Throwable $throwable) {
             throw $throwable;
         }
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @param array $selectors
-     * @param array $conditions
-     * @param array $parameters
-     * @param array $optional
-     * @return array
-     */
+
     public function findBy(array $selectors = [], array $conditions = [], array $parameters = [], array $optional = []) : array
     {
         try {
@@ -92,12 +58,6 @@ class DataRepository implements DataRepositoryInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @param array $conditions
-     * @return array
-     */
     public function findOneBy(array $conditions) : array
     {
         $this->isArray($conditions);
@@ -108,13 +68,7 @@ class DataRepository implements DataRepositoryInterface
             throw $throwable;
         }
     }
-    /**
-     * @inheritdoc
-     *
-     * @param array $conditions
-     * @param array $selectors
-     * @return object
-     */
+
     public function findObjectBy(array $conditions = [], array $selectors = []): object
     {
         $this->isArray($conditions);
@@ -124,29 +78,17 @@ class DataRepository implements DataRepositoryInterface
             throw $throwable;
         }
     }
-    /**
-     * @inheritdoc
-     *
-     * @param array $selectors
-     * @param array $conditions
-     * @param array $parameters
-     * @param array $optional
-     * @return array
-     */
-    public function findBySearch(array $selectors = [], array $conditions = [], array $parameters = [], array $optional) : array
+
+    public function findBySearch(array $selectors = [], array $conditions = [], array $parameters = [], array $optional = []) : array
     {
+        $this->isArray($conditions);
         try {
             return $this->em->getCrud()->search($selectors, $conditions, $parameters, $optional);
         } catch(Throwable $throwable) {
             throw $throwable;
         }
     }
-    /**
-     * @inheritdoc
-     *
-     * @param array $conditions
-     * @return boolean
-     */
+
     public function findByIdAndDelete(array $conditions) : bool
     {
         $this->isArray($conditions);
@@ -162,13 +104,7 @@ class DataRepository implements DataRepositoryInterface
             throw $throwable;
         }
     }
-    /**
-     * @inheritdoc
-     *
-     * @param array $fields
-     * @param integer $id
-     * @return boolean
-     */
+
     public function findByIdUpdate(array $fields = [], int $id) : bool
     {
         $this->isArray($fields);

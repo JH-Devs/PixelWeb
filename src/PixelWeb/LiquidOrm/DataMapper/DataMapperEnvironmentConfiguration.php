@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace PixelWeb\LiquidOrm\DataMapper;
 
 use PixelWeb\Base\Exception\BaseInvalidArgumentException;
-use PixelWeb\DataMapper\Exception\DataMapperInvalidArgumentException;
 
 class DataMapperEnvironmentConfiguration
 {
     /**
      * @var array
      */
-    private array $credentials = [];
+    private array $credentials;
 
     /**
      * Moje konstrukční třída
@@ -37,7 +36,9 @@ class DataMapperEnvironmentConfiguration
         $this->isCredentialsValid($driver);
         foreach ($this->credentials as $credential) {
             if (array_key_exists($driver, $credential)) {
-                $connectionArray = $credential($driver);
+                throw new BaseInvalidArgumentException('Core Error: Your selected database driver is not supported. Please see the database.yaml file for all support driver. Or specify a supported driver from your app.yaml configuration file');
+            } else {
+                $connectionArray = $credential[$driver];
             }
         }
         return $connectionArray;

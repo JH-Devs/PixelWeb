@@ -47,7 +47,7 @@ class YamlConfig
      */
     public static function file(string $yamlFile)
     {
-        return (new YamlConfig) -> getYaml($yamlFile);
+        return (array)(new YamlConfig) -> getYaml($yamlFile);
     }
     
 }

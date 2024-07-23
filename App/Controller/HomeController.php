@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use PixelWeb\Base\BaseController;
+use App\Model\UserModel;
+use PixelWeb\LiquidOrm\EntityManager\Crud;
+use PixelWeb\LiquidOrm\EntityManager\EntityManager;
 
 class HomeController extends BaseController
 {
@@ -14,14 +17,19 @@ class HomeController extends BaseController
     }
     public function indexAction()
     {
-        echo 'Domovská stránka <br/>';
+        /*
+        $user = new UserModel();
+        $data = $user->getRepo()->findAll();
+        var_dump($data);
+       */
+
+      /*  $user = new UserModel();
+        $data = $user->getRepo()->findAll();
+
+        print_r($data);*/
     }
     protected function before()
-    {
-        echo 'toto je předchozí akce háčku. <br/>';
-    }
+    { }
     protected function after()
-    {
-        echo 'toto je další akce háčku. <br/>';
-    }
+    { }
 }

@@ -5,6 +5,7 @@ namespace PixelWeb\LiquidOrm\EntityManager;
 
 use PixelWeb\LiquidOrm\DataMapper\DataMapper;
 use PixelWeb\LiquidOrm\QueryBuilder\QueryBuilder;
+use PixelWeb\LiquidOrm\EntityManager\CrudInterface;
 
 use Throwable;
 
@@ -55,7 +56,7 @@ class Crud implements CrudInterface
      *
      * @return integer
      */
-    public function lastID() : int
+    public function lastId() : int
     {
         return $this->dataMapper->getLastId();
     }
@@ -177,6 +178,15 @@ class Crud implements CrudInterface
             }
         } catch(Throwable $throwable) {
             throw $throwable;
+        }
+    }
+    public function get(array $selectors = [], array $conditions = []) : ?Object
+    {
+        $args = ['table' => $this->getSchema(), 'type' => 'select', 'selectors' => $selectors, 'conditions' => $conditions];
+        $query = $this->queryBuilder->buildQuery($args)->selectQuery();
+        $this->dataMapper->persist($query, $this->dataMapper->buildQueryParameters($conditions));
+        if ($this->dataMapper->numRows() >= 0) {
+            return $this->dataMapper->result();
         }
     }
 }

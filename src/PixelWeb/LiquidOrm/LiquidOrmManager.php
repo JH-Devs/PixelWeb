@@ -21,14 +21,6 @@ class LiquidOrmManager
 
    protected array $options;
 
-   /**
-    * @inheritDoc
-    *
-    * @param string $tableSchema
-    * @param string $tableSchemaId
-    * @param array|null $options
-    * @param DataMapperEnvironmentConfiguration $environmentConfiguration
-    */
    public function __construct(string $tableSchema, string $tableSchemaId, DataMapperEnvironmentConfiguration $environmentConfiguration, ?array $options = [])
    {
     $this->tableSchema = $tableSchema;
@@ -45,7 +37,7 @@ class LiquidOrmManager
     public function initialize() : object
     {
         $dataMapperFactory = new DataMapperFactory();
-        $dataMapper = $dataMapperFactory->create(DatabaseConnection::class, DataMapperEnvironmentConfiguration::class);
+        $dataMapper = $dataMapperFactory->create(DatabaseConnection::class, $this->environmentConfiguration);
         if ($dataMapper) {
             $queryBuilderFactory = new QueryBuilderFactory();
             $queryBuilder = $queryBuilderFactory->create(QueryBuilder::class);

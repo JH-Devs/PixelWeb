@@ -10,7 +10,6 @@ use PixelWeb\Base\Exception\BaseException;
 use PixelWeb\Base\Exception\BaseInvalidArgumentException;
 use PixelWeb\Base\Exception\BaseNoValueException;
 use PixelWeb\DatabaseConnection\DatabaseConnectionInterface;
-use PixelWeb\DataMapper\Exception\DataMapperException;
 use Throwable;
 
 class DataMapper implements DataMapperInterface
