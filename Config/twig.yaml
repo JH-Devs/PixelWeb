@@ -1,6 +1,6 @@
 debug: false
 charset: utf-8
-cache: ''
+cache: false #''
 auto_reload: true
 strict_variables: false
 autoescape: false

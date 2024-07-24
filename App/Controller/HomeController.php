@@ -17,16 +17,11 @@ class HomeController extends BaseController
     }
     public function indexAction()
     {
-        /*
         $user = new UserModel();
-        $data = $user->getRepo()->findAll();
-        var_dump($data);
-       */
-
-      /*  $user = new UserModel();
-        $data = $user->getRepo()->findAll();
-
-        print_r($data);*/
+        $this->render('client/home/index.html.twig', [
+            'users' => $user->getRepo()->findOneBy(['id' => 1]) 
+        ]);
+            
     }
     protected function before()
     { }
